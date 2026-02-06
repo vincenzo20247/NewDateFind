@@ -12,25 +12,23 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Custom scrollbar for better visual appeal */
+        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
-
         ::-webkit-scrollbar-track {
             background: #f1f5e9;
         }
-
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 4px;
         }
 
-        /* Custom styles for the sliding pill switch */
+        /* Sliding pill switch */
         .pill-switch {
             position: relative;
             background-color: #e2e8f0;
-            border-radius: 9999px; /* rounded-full */
+            border-radius: 9999px;
             padding: 4px;
             display: flex;
             align-items: center;
@@ -45,8 +43,8 @@
             top: 4px;
             width: calc(50% - 4px);
             height: calc(100% - 8px);
-            background-color: #3b82f6; /* bg-blue-500 */
-            border-radius: 9999px; /* rounded-full */
+            background-color: #3b82f6;
+            border-radius: 9999px;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -60,7 +58,7 @@
             padding: 0 1.5rem;
             text-align: center;
             font-weight: 500;
-            color: #64748b; /* text-gray-600 */
+            color: #64748b;
             transition: color 0.3s;
             background-color: transparent;
             border: none;
@@ -69,15 +67,28 @@
         .pill-switch button.active {
             color: white;
         }
+
+        /* Date Input Styling */
+        .date-input-group input {
+            text-align: center;
+        }
+        /* Hide arrows/spinners in number inputs */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 </head>
 <body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
 
     <div class="bg-white p-6 rounded-3xl shadow-2xl w-full max-w-2xl">
-        <!-- Header with adjusted text size -->
         <h2 class="text-xl font-bold text-center text-slate-800 mb-6">Payment Calculator</h2>
         
-        <!-- New sliding pill switch for different calculation modes -->
+        <!-- Tab Switcher -->
         <div class="pill-switch mb-6">
             <div id="pill-slider" class="pill-slider"></div>
             <button id="tab-paymentDateCalc" class="active" onclick="showTab('paymentDateCalc')">
@@ -88,36 +99,34 @@
             </button>
         </div>
 
-        <!-- Payment Date Calculator tab content -->
+        <!-- Tab 1: Payment Date Calculator -->
         <div id="paymentDateCalc" class="tab-content transition-opacity duration-300 ease-in-out opacity-0 hidden">
             <div class="grid grid-cols-1 gap-4 mb-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">From Payment Date:</label>
-                    <div class="flex gap-2">
-                        <select id="lastPaymentDay" class="w-1/3 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500" onchange="updateCalculation('paymentDateCalc')"></select>
-                        <select id="lastPaymentMonth" class="w-1/3 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500" onchange="updateCalculation('paymentDateCalc')"></select>
-                        <select id="lastPaymentYear" class="w-1/3 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500" onchange="updateCalculation('paymentDateCalc')"></select>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">From Payment Date (DD/MM/YYYY):</label>
+                    <div class="flex gap-2 date-input-group">
+                        <input type="number" id="lastPaymentDay" placeholder="DD" min="1" max="31" class="w-1/4 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" oninput="updateCalculation('paymentDateCalc')">
+                        <input type="number" id="lastPaymentMonth" placeholder="MM" min="1" max="12" class="w-1/4 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" oninput="updateCalculation('paymentDateCalc')">
+                        <input type="number" id="lastPaymentYear" placeholder="YYYY" class="w-2/4 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" oninput="updateCalculation('paymentDateCalc')">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">To Payment Date:</label>
-                    <div class="flex gap-2">
-                        <select id="endPaymentDay" class="w-1/3 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500" onchange="updateCalculation('paymentDateCalc')"></select>
-                        <select id="endPaymentMonth" class="w-1/3 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500" onchange="updateCalculation('paymentDateCalc')"></select>
-                        <select id="endPaymentYear" class="w-1/3 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500" onchange="updateCalculation('paymentDateCalc')"></select>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">To Payment Date (DD/MM/YYYY):</label>
+                    <div class="flex gap-2 date-input-group">
+                        <input type="number" id="endPaymentDay" placeholder="DD" min="1" max="31" class="w-1/4 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" oninput="updateCalculation('paymentDateCalc')">
+                        <input type="number" id="endPaymentMonth" placeholder="MM" min="1" max="12" class="w-1/4 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" oninput="updateCalculation('paymentDateCalc')">
+                        <input type="number" id="endPaymentYear" placeholder="YYYY" class="w-2/4 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" oninput="updateCalculation('paymentDateCalc')">
                     </div>
                 </div>
             </div>
 
-            <!-- New skip 31st day checkbox -->
             <div class="flex items-center mb-4">
                 <input type="checkbox" id="skip31stDay" class="form-checkbox h-4 w-4 text-blue-600 rounded-full focus:ring-blue-500 transition-colors duration-200" onchange="updateCalculation('paymentDateCalc')">
                 <label for="skip31stDay" class="ml-2 block text-sm text-gray-900">Skip 31st Day</label>
             </div>
 
-            <!-- Daily amount input container -->
             <div class="gap-4 mb-4 flex flex-col" id="dailyAmounts">
-                <!-- Inputs will be added dynamically here -->
+                <!-- Dynamic daily amount rows -->
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4 mb-4">
@@ -129,33 +138,31 @@
                 </button>
             </div>
 
-            <div class="result" id="resultPaymentDate"></div>
+            <div id="resultPaymentDate"></div>
         </div>
 
-        <!-- Amount Date Calculator tab content -->
+        <!-- Tab 2: Amount Date Calculator -->
         <div id="amountDateCalc" class="tab-content transition-opacity duration-300 ease-in-out opacity-0 hidden">
-            <!-- First row for Daily Amount and Total Amount Paid -->
             <div class="flex flex-col md:flex-row gap-4 mb-4">
                 <div class="flex-1">
                     <label for="dailyAmount" class="block text-sm font-medium text-gray-700 mb-1">Daily Amount:</label>
-                    <input type="number" id="dailyAmount" class="w-full p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-200" oninput="validateDailyAmount()">
+                    <input type="number" id="dailyAmount" class="w-full p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200" oninput="validateDailyAmount()">
                     <div id="dailyAmountError" class="text-sm text-red-500 mt-1"></div>
                 </div>
                 <div class="flex-1">
                     <label for="totalAmountPaid" class="block text-sm font-medium text-gray-700 mb-1">Total Amount Paid:</label>
-                    <input type="number" id="totalAmountPaid" class="w-full p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-200" oninput="validateTotalAmount()" disabled>
+                    <input type="number" id="totalAmountPaid" class="w-full p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200" oninput="validateTotalAmount()" disabled>
                     <div id="totalAmountError" class="text-sm text-red-500 mt-1"></div>
                 </div>
             </div>
 
-            <!-- Second row for Last Payment Date and Clear button -->
             <div class="flex flex-col md:flex-row gap-4 items-end mb-4">
                 <div class="w-full flex-1">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Last Payment Date:</label>
-                    <div class="flex gap-2">
-                        <select id="lastAmountPaymentDay" class="w-1/3 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500" onchange="updateCalculation('amountDateCalc')"></select>
-                        <select id="lastAmountPaymentMonth" class="w-1/3 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500" onchange="updateCalculation('amountDateCalc')"></select>
-                        <select id="lastAmountPaymentYear" class="w-1/3 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500" onchange="updateCalculation('amountDateCalc')"></select>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Last Payment Date (DD/MM/YYYY):</label>
+                    <div class="flex gap-2 date-input-group">
+                        <input type="number" id="lastAmountPaymentDay" placeholder="DD" min="1" max="31" class="w-1/4 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 outline-none" oninput="updateCalculation('amountDateCalc')" disabled>
+                        <input type="number" id="lastAmountPaymentMonth" placeholder="MM" min="1" max="12" class="w-1/4 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 outline-none" oninput="updateCalculation('amountDateCalc')" disabled>
+                        <input type="number" id="lastAmountPaymentYear" placeholder="YYYY" class="w-2/4 p-1.5 border border-gray-300 rounded-xl focus:border-blue-500 outline-none" oninput="updateCalculation('amountDateCalc')" disabled>
                     </div>
                 </div>
                 <div class="w-full md:w-auto mt-4 md:mt-0">
@@ -165,87 +172,42 @@
                 </div>
             </div>
             
-            <div class="result" id="resultAmountDate"></div>
+            <div id="resultAmountDate"></div>
         </div>
-
     </div>
 
     <script>
-        // Set the active tab and show its content on page load
         document.addEventListener('DOMContentLoaded', () => {
             showTab('paymentDateCalc');
             
-            // Populate date dropdowns
-            populateDropdowns('lastPaymentDay', 'lastPaymentMonth', 'lastPaymentYear');
-            populateDropdowns('endPaymentDay', 'endPaymentMonth', 'endPaymentYear');
-            populateDropdowns('lastAmountPaymentDay', 'lastAmountPaymentMonth', 'lastAmountPaymentYear');
+            // Set defaults for all date inputs
+            setDefaultDates();
 
             addDailyAmountRow('paymentDateCalc');
         });
 
-        // Function to populate date dropdowns
-        function populateDropdowns(dayId, monthId, yearId) {
-            const dayDropdown = document.getElementById(dayId);
-            const monthDropdown = document.getElementById(monthId);
-            const yearDropdown = document.getElementById(yearId);
-            
-            // Add a default empty option
-            dayDropdown.innerHTML = '<option value="">Day</option>';
-            monthDropdown.innerHTML = '<option value="">Month</option>';
-            yearDropdown.innerHTML = '<option value="">Year</option>';
-
+        function setDefaultDates() {
             const today = new Date();
-            const currentYear = today.getFullYear();
-            const currentMonth = today.getMonth() + 1; // getMonth() is 0-indexed
-            const currentDay = today.getDate();
+            const d = today.getDate();
+            const m = today.getMonth() + 1;
+            const y = today.getFullYear();
 
-            // Populate years (10 years before/after current year)
-            for (let i = currentYear - 10; i <= currentYear + 10; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                if (i === currentYear) {
-                    option.selected = true;
-                }
-                yearDropdown.appendChild(option);
-            }
+            // From Payment Date
+            document.getElementById('lastPaymentDay').value = d;
+            document.getElementById('lastPaymentMonth').value = m;
+            document.getElementById('lastPaymentYear').value = y;
 
-            // Populate months
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            months.forEach((month, index) => {
-                const option = document.createElement('option');
-                option.value = index + 1;
-                option.textContent = month;
-                if (index + 1 === currentMonth) {
-                    option.selected = true;
-                }
-                monthDropdown.appendChild(option);
-            });
+            // To Payment Date
+            document.getElementById('endPaymentDay').value = d;
+            document.getElementById('endPaymentMonth').value = m;
+            document.getElementById('endPaymentYear').value = y;
 
-            // Function to update days based on month and year
-            function updateDays() {
-                const selectedYear = parseInt(yearDropdown.value, 10);
-                const selectedMonth = parseInt(monthDropdown.value, 10);
-
-                dayDropdown.innerHTML = '<option value="">Day</option>';
-
-                if (selectedYear && selectedMonth) {
-                    const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-                    for (let i = 1; i <= daysInMonth; i++) {
-                        const option = document.createElement('option');
-                        option.value = i;
-                        option.textContent = i;
-                        dayDropdown.appendChild(option);
-                    }
-                }
-            }
-
-            yearDropdown.onchange = updateDays;
-            monthDropdown.onchange = updateDays;
-            updateDays();
+            // Last Amount Payment Date
+            document.getElementById('lastAmountPaymentDay').value = d;
+            document.getElementById('lastAmountPaymentMonth').value = m;
+            document.getElementById('lastAmountPaymentYear').value = y;
         }
 
-        // Function to switch between tabs
         function showTab(tabId) {
             const tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => {
@@ -256,16 +218,13 @@
             });
             const activeTab = document.getElementById(tabId);
             activeTab.classList.remove('hidden');
-            activeTab.classList.add('active', 'flex', 'flex-col'); // Add flex for layout
-            setTimeout(() => activeTab.classList.add('opacity-100'), 10); // Fade in
+            activeTab.classList.add('active', 'flex', 'flex-col');
+            setTimeout(() => activeTab.classList.add('opacity-100'), 10);
 
             const tabButtons = document.querySelectorAll('.pill-switch button');
             const pillSlider = document.getElementById('pill-slider');
 
-            tabButtons.forEach(button => {
-                button.classList.remove('active');
-            });
-
+            tabButtons.forEach(button => button.classList.remove('active'));
             const activeButton = document.getElementById('tab-' + tabId);
             activeButton.classList.add('active');
 
@@ -276,32 +235,31 @@
             }
         }
 
-        // Validates the daily amount input for the amount-date calculator
         function validateDailyAmount(shouldUpdateCalculation = true) {
             const dailyAmountInput = document.getElementById("dailyAmount");
             const totalAmountPaidInput = document.getElementById("totalAmountPaid");
             const errorDiv = document.getElementById("dailyAmountError");
             const value = parseFloat(dailyAmountInput.value);
 
+            const dateInputs = [
+                document.getElementById("lastAmountPaymentDay"),
+                document.getElementById("lastAmountPaymentMonth"),
+                document.getElementById("lastAmountPaymentYear")
+            ];
+
             if (isNaN(value) || value <= 0) {
                 errorDiv.textContent = "Please enter a valid amount.";
                 dailyAmountInput.classList.add("border-red-500");
-                dailyAmountInput.classList.remove("border-gray-300");
                 totalAmountPaidInput.disabled = true;
-                document.getElementById("lastAmountPaymentDay").disabled = true;
-                document.getElementById("lastAmountPaymentMonth").disabled = true;
-                document.getElementById("lastAmountPaymentYear").disabled = true;
+                dateInputs.forEach(i => i.disabled = true);
                 return false;
             }
 
             if (value % 10 !== 0) {
                 errorDiv.textContent = "Daily amount must be a multiple of 10.";
                 dailyAmountInput.classList.add("border-red-500");
-                dailyAmountInput.classList.remove("border-gray-300");
                 totalAmountPaidInput.disabled = true;
-                document.getElementById("lastAmountPaymentDay").disabled = true;
-                document.getElementById("lastAmountPaymentMonth").disabled = true;
-                document.getElementById("lastAmountPaymentYear").disabled = true;
+                dateInputs.forEach(i => i.disabled = true);
                 return false;
             }
 
@@ -309,9 +267,7 @@
             dailyAmountInput.classList.remove("border-red-500");
             dailyAmountInput.classList.add("border-gray-300");
             totalAmountPaidInput.disabled = false;
-            document.getElementById("lastAmountPaymentDay").disabled = false;
-            document.getElementById("lastAmountPaymentMonth").disabled = false;
-            document.getElementById("lastAmountPaymentYear").disabled = false;
+            dateInputs.forEach(i => i.disabled = false);
 
             if (shouldUpdateCalculation) {
                 validateTotalAmount(true);
@@ -319,7 +275,6 @@
             return true;
         }
 
-        // Validates the total amount paid input for the amount-date calculator
         function validateTotalAmount(shouldUpdateCalculation = true) {
             const dailyAmount = parseFloat(document.getElementById("dailyAmount").value);
             const totalAmountInput = document.getElementById("totalAmountPaid");
@@ -329,7 +284,6 @@
             if (isNaN(value) || value <= 0) {
                 errorDiv.textContent = "Please enter a valid amount.";
                 totalAmountInput.classList.add("border-red-500");
-                totalAmountInput.classList.remove("border-gray-300");
                 return false;
             }
 
@@ -337,7 +291,6 @@
                 if (value % dailyAmount !== 0) {
                     errorDiv.textContent = `Total amount must be a multiple of the daily amount (${dailyAmount}).`;
                     totalAmountInput.classList.add("border-red-500");
-                    totalAmountInput.classList.remove("border-gray-300");
                     return false;
                 }
             }
@@ -352,69 +305,66 @@
             return true;
         }
 
-        // Adds a new input field for daily amount
         function addDailyAmountRow(tabId) {
             const dailyAmountsDiv = document.getElementById('dailyAmounts');
             const newDiv = document.createElement('div');
             newDiv.classList.add('daily-amount-input', 'relative');
             newDiv.innerHTML = `
-                <input type="number" placeholder="Daily Amount" class="w-full p-1.5 pr-10 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-200" oninput="updateCalculation('${tabId}')">
+                <input type="number" placeholder="Daily Amount" class="w-full p-1.5 pr-10 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition duration-200" oninput="updateCalculation('${tabId}')">
                 <button class="remove-btn absolute right-0 top-0 h-full w-10 text-white bg-red-500 rounded-r-xl transition-colors duration-200 hover:bg-red-600 flex items-center justify-center text-xl font-bold" onclick="removeDailyAmount(this, '${tabId}')">
                     &times;
                 </button>
             `;
             dailyAmountsDiv.appendChild(newDiv);
-            adjustDailyAmountsLayout(); // Adjust layout
+            adjustDailyAmountsLayout();
             updateCalculation(tabId);
         }
 
-        // Removes a daily amount input field
         function removeDailyAmount(button, tabId) {
             const dailyAmountsDiv = document.getElementById('dailyAmounts');
             if (dailyAmountsDiv.childElementCount > 1) {
                 button.closest('.daily-amount-input').remove();
-                adjustDailyAmountsLayout(); // Adjust layout
+                adjustDailyAmountsLayout();
                 updateCalculation(tabId);
             }
         }
 
-        // Function to adjust the layout of the Daily Amounts container
         function adjustDailyAmountsLayout() {
             const dailyAmountsDiv = document.getElementById('dailyAmounts');
             const childCount = dailyAmountsDiv.childElementCount;
-
-            // Remove existing grid/flex classes
-            dailyAmountsDiv.classList.remove('grid', 'grid-cols-3', 'lg:grid-cols-5');
+            dailyAmountsDiv.classList.remove('grid', 'grid-cols-3', 'lg:grid-cols-5', 'flex', 'flex-col');
             
             if (childCount === 1) {
-                // If there is only one input, show it in full width
                 dailyAmountsDiv.classList.add('flex', 'flex-col');
             } else {
-                // If there is more than one input, show it in a grid
                 dailyAmountsDiv.classList.add('grid', 'grid-cols-3', 'lg:grid-cols-5');
             }
         }
 
-        // Main function to update the calculation based on the active tab
+        function isValidDate(d, m, y) {
+            const date = new Date(y, m - 1, d);
+            return date.getFullYear() == y && date.getMonth() == m - 1 && date.getDate() == d;
+        }
+
         function updateCalculation(tabId) {
             if (tabId === 'paymentDateCalc') {
-                const startDay = document.getElementById("lastPaymentDay").value;
-                const startMonth = document.getElementById("lastPaymentMonth").value;
-                const startYear = document.getElementById("lastPaymentYear").value;
+                const sD = parseInt(document.getElementById("lastPaymentDay").value);
+                const sM = parseInt(document.getElementById("lastPaymentMonth").value);
+                const sY = parseInt(document.getElementById("lastPaymentYear").value);
 
-                const endDay = document.getElementById("endPaymentDay").value;
-                const endMonth = document.getElementById("endPaymentMonth").value;
-                const endYear = document.getElementById("endPaymentYear").value;
+                const eD = parseInt(document.getElementById("endPaymentDay").value);
+                const eM = parseInt(document.getElementById("endPaymentMonth").value);
+                const eY = parseInt(document.getElementById("endPaymentYear").value);
 
                 const skip31stDay = document.getElementById("skip31stDay").checked;
 
-                if (!startDay || !startMonth || !startYear || !endDay || !endMonth || !endYear) {
-                    document.getElementById("resultPaymentDate").innerHTML = '<p class="text-center text-gray-500 mt-4">Please select both dates to calculate.</p>';
+                if (!sD || !sM || !sY || !eD || !eM || !eY || !isValidDate(sD, sM, sY) || !isValidDate(eD, eM, eY)) {
+                    document.getElementById("resultPaymentDate").innerHTML = '<p class="text-center text-gray-500 mt-4">Please enter valid dates to calculate.</p>';
                     return;
                 }
 
-                const startDate = new Date(startYear, startMonth - 1, startDay);
-                const endDate = new Date(endYear, endMonth - 1, endDay);
+                const startDate = new Date(sY, sM - 1, sD);
+                const endDate = new Date(eY, eM - 1, eD);
 
                 if (endDate < startDate) {
                     document.getElementById("resultPaymentDate").innerHTML = '<p class="text-center text-red-500 mt-4">"To Date" must be after "From Date".</p>';
@@ -423,12 +373,8 @@
 
                 let totalDays = 0;
                 let currentDate = new Date(startDate);
-                
                 while (currentDate <= endDate) {
-                    // If 31st day is to be skipped and this is a 31-day month, skip it
-                    if (skip31stDay && currentDate.getDate() === 31) {
-                        // Do nothing, just move to the next day
-                    } else {
+                    if (!(skip31stDay && currentDate.getDate() === 31)) {
                         totalDays++;
                     }
                     currentDate.setDate(currentDate.getDate() + 1);
@@ -437,8 +383,8 @@
                 const dailyAmountInputs = document.querySelectorAll('#dailyAmounts input[type="number"]');
                 let totalPaymentAmount = 0;
                 let resultRows = '';
-
                 let hasValidAmount = false;
+
                 dailyAmountInputs.forEach((input, index) => {
                     const dailyAmount = parseFloat(input.value);
                     if (!isNaN(dailyAmount) && dailyAmount > 0) {
@@ -455,13 +401,13 @@
                 });
 
                 if (hasValidAmount) {
-                    let resultHTML = `
+                    document.getElementById("resultPaymentDate").innerHTML = `
                         <div class="overflow-hidden bg-white shadow rounded-xl">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-blue-500">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Description</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Value</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase">Description</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase">Value</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -478,7 +424,6 @@
                             </table>
                         </div>
                     `;
-                    document.getElementById("resultPaymentDate").innerHTML = resultHTML;
                 } else {
                     document.getElementById("resultPaymentDate").innerHTML = '<p class="text-center text-gray-500 mt-4">Please enter at least one daily amount.</p>';
                 }
@@ -486,18 +431,16 @@
                 const dailyAmount = parseFloat(document.getElementById("dailyAmount").value);
                 const totalAmountPaid = parseFloat(document.getElementById("totalAmountPaid").value);
                 
-                const lastPaymentDay = document.getElementById("lastAmountPaymentDay").value;
-                const lastPaymentMonth = document.getElementById("lastAmountPaymentMonth").value;
-                const lastPaymentYear = document.getElementById("lastAmountPaymentYear").value;
-                
-                const dailyAmountValid = validateDailyAmount(false);
-                const totalAmountValid = validateTotalAmount(false);
+                const d = parseInt(document.getElementById("lastAmountPaymentDay").value);
+                const m = parseInt(document.getElementById("lastAmountPaymentMonth").value);
+                const y = parseInt(document.getElementById("lastAmountPaymentYear").value);
 
-                if (dailyAmountValid && totalAmountValid && !isNaN(dailyAmount) && !isNaN(totalAmountPaid) && lastPaymentDay && lastPaymentMonth && lastPaymentYear) {
-                    const lastPaymentDate = new Date(lastPaymentYear, lastPaymentMonth - 1, lastPaymentDay);
+                if (validateDailyAmount(false) && validateTotalAmount(false) && d && m && y && isValidDate(d, m, y)) {
+                    const lastPaymentDate = new Date(y, m - 1, d);
                     const totalDays = Math.floor(totalAmountPaid / dailyAmount);
                     const endDate = new Date(lastPaymentDate);
                     endDate.setDate(lastPaymentDate.getDate() + totalDays);
+                    
                     const formattedDate = endDate.toLocaleDateString('en-GB', {
                         day: '2-digit',
                         month: 'short',
@@ -517,39 +460,31 @@
             }
         }
 
-        // Function to clear all input fields based on the active tab
         function clearFields(tabId) {
             if (tabId === 'paymentDateCalc') {
-                // Reset date dropdowns to the current date
-                populateDropdowns('lastPaymentDay', 'lastPaymentMonth', 'lastPaymentYear');
-                populateDropdowns('endPaymentDay', 'endPaymentMonth', 'endPaymentYear');
-
-                // Uncheck the 31st Day checkbox
+                setDefaultDates();
                 document.getElementById('skip31stDay').checked = false;
-
-
                 const dailyAmounts = document.getElementById('dailyAmounts');
                 dailyAmounts.innerHTML = '';
-                addDailyAmountRow(tabId); // Add the first row back
+                addDailyAmountRow(tabId);
                 updateCalculation(tabId);
             } else if (tabId === 'amountDateCalc') {
                 document.getElementById("dailyAmount").value = '';
                 document.getElementById("totalAmountPaid").value = '';
-                
-                // Reset date dropdowns to the current date
-                populateDropdowns('lastAmountPaymentDay', 'lastAmountPaymentMonth', 'lastAmountPaymentYear');
-
+                setDefaultDates();
                 document.getElementById("resultAmountDate").innerHTML = '';
                 document.getElementById("dailyAmountError").textContent = '';
                 document.getElementById("totalAmountError").textContent = '';
                 document.getElementById("dailyAmount").classList.remove("border-red-500");
-                document.getElementById("dailyAmount").classList.add("border-gray-300");
                 document.getElementById("totalAmountPaid").classList.remove("border-red-500");
-                document.getElementById("totalAmountPaid").classList.add("border-gray-300");
                 document.getElementById("totalAmountPaid").disabled = true;
-                document.getElementById("lastAmountPaymentDay").disabled = true;
-                document.getElementById("lastAmountPaymentMonth").disabled = true;
-                document.getElementById("lastAmountPaymentYear").disabled = true;
+                
+                const dateInputs = [
+                    document.getElementById("lastAmountPaymentDay"),
+                    document.getElementById("lastAmountPaymentMonth"),
+                    document.getElementById("lastAmountPaymentYear")
+                ];
+                dateInputs.forEach(i => i.disabled = true);
             }
         }
     </script>
